@@ -17,6 +17,8 @@ class RegisteredUserController extends Controller
 {
     /**
      * Display the registration view.
+     *
+     * @return View
      */
     public function create(): View
     {
@@ -24,23 +26,39 @@ class RegisteredUserController extends Controller
     }
 
     /**
+     * Create a new user instance.
+     *
+     * @param array $data
+     * @return User
+     */
+    protected function createUser(array $data): User
+    {
+        return User::create([
+            'first_name' => $data['first_name'],
+            'pseudo' => $data['pseudo'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
+    }
+
+    /**
      * Handle an incoming registration request.
      *
+     * @param Request $request
      * @throws \Illuminate\Validation\ValidationException
+     * @return RedirectResponse
      */
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'first_name' => ['required', 'string', 'max:255'],
+            'pseudo' => ['required', 'string', 'max:255', 'unique:users,pseudo'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        $data = $request->only('first_name', 'pseudo', 'email', 'password');
+        $user = $this->createUser($data);
 
         event(new Registered($user));
 
