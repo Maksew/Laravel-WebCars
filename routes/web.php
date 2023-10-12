@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,12 +18,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('dashboard');
 });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -35,6 +37,13 @@ Route::post('register', [RegisteredUserController::class, 'store']);
 
 Route::get('/rating/create', [RatingController::class, 'create'])->name('rating.create');
 Route::post('/rating/store', [RatingController::class, 'store'])->name('rating.store');
+
+Route::get('/vehicles/create', [VehicleController::class, 'create'])->name('vehicle.create');
+Route::post('/vehicles', [VehicleController::class, 'store'])->name('store.vehicle');
+
+Route::get('/get-models-by-brand/{brand}', [VehicleController::class, 'getModelsByBrand']);
+
+
 
 
 

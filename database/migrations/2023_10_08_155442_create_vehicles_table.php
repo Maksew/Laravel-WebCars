@@ -13,15 +13,29 @@ return new class extends Migration
     {
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->string('brand');
             $table->string('model');
-            $table->unsignedBigInteger('user_id');  // Si chaque véhicule est associé à un utilisateur.
+            $table->integer('year');
+            $table->string('category');
+            $table->string('energy');
+            $table->string('transmission');
+            $table->string('agency');
+            $table->decimal('price', 8, 2);
+            $table->decimal('kilometrage', 8, 2);
+            $table->string('region');
+            $table->integer('engine_rating');
+            $table->integer('chassis_rating');
+            $table->integer('handling_rating');
+            $table->integer('visual_rating');
+            $table->integer('general_rating');
+            $table->text('description')->nullable();
+            // ... vous n'ajouterez pas de colonne pour vehicle_images ici car cela nécessitera probablement une autre table.
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
+
+
+
 
     /**
      * Reverse the migrations.
