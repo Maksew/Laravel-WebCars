@@ -8,9 +8,15 @@
         </div>
     @endif
 
-    CONTENU
+        @foreach ($vehicles as $vehicle)
+            <div>
+                <h2>{{ $vehicle->brand }} {{ $vehicle->model }}</h2>
+                <!-- ... autres détails du véhicule ... -->
+            </div>
+        @endforeach
 
-    <script>
+
+        <script>
         function closeNotification() {
             document.getElementById('notification').style.display = 'none';
         }

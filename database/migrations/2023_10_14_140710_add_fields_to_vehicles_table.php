@@ -1,21 +1,13 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVehiclesTable extends Migration
+class AddFieldsToVehiclesTable extends Migration
 {
     public function up()
     {
-        Schema::create('vehicles', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('brand');
-            $table->string('model');
-            $table->unsignedBigInteger('user_id');
-            $table->timestamp('created_at')->nullable();
-            $table->timestamp('updated_at')->nullable();
+        Schema::table('vehicles', function (Blueprint $table) {
             $table->string('year');
             $table->string('category');
             $table->string('energy');
@@ -30,13 +22,14 @@ class CreateVehiclesTable extends Migration
             $table->unsignedTinyInteger('visual_rating');
             $table->unsignedTinyInteger('general_rating');
             $table->text('description')->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('vehicles');
+        Schema::table('vehicles', function (Blueprint $table) {
+            // Liste des colonnes à supprimer
+            $table->dropColumn(['year', 'category', 'energy', 'transmission', 'agency', 'price', 'kilometrage', 'region', 'engine_rating', 'chassis_rating', 'handling_rating', 'visual_rating', 'general_rating', 'description']);
+        });
     }
 }
-

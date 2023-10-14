@@ -17,13 +17,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard');
-});
+Route::get('/', [VehicleController::class, 'index'])->name('dashboard');
+Route::get('/dashboard', [VehicleController::class, 'index'])->name('dashboard.index');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
 
 
 Route::middleware('auth')->group(function () {
@@ -42,8 +38,6 @@ Route::get('/vehicles/create', [VehicleController::class, 'create'])->name('vehi
 Route::post('/vehicles', [VehicleController::class, 'store'])->name('store.vehicle');
 
 Route::get('/get-models-by-brand/{brand}', [VehicleController::class, 'getModelsByBrand']);
-
-
 
 
 
