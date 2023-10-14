@@ -32,11 +32,14 @@ class VehicleController extends Controller
             'vehicle_images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
+        $data = $request->all();
+        $data['user_id'] = auth()->id();
 
-        Vehicle::create($request->all());
+        Vehicle::create($data);
 
         return redirect()->route('vehicle.create')->with('success', 'Véhicule ajouté avec succès!');
     }
+
 
     protected $brandsAndModels = [
         'Audi' => ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'Q2', 'Q3', 'Q5', 'Q7', 'Q8'],
