@@ -282,10 +282,22 @@
                     <!-- Boutons -->
                     <button type="submit" class="btn btn-success">Ajouter le véhicule</button>
                     <a href="{{ route('dashboard') }}" class="btn btn-danger">Annuler</a>
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                 </form>
             </div>
         </div>
     </div>
+
 
 @endsection
 

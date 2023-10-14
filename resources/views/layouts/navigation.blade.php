@@ -7,11 +7,6 @@
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <!-- Style personnalisé pour le gradient -->
-    <style>
-        .bg-gradient {
-            background: linear-gradient(to right, blueviolet, violet);
-        }
-    </style>
 </head>
 
 <body class="bg-gradient">

@@ -21,19 +21,17 @@ class VehicleController extends Controller
             'category' => 'required|string',
             'energy' => 'required|string',
             'transmission' => 'required|string',
-            'agency' => 'required|string',
             'price' => 'required|numeric',
             'kilometrage' => 'required|numeric',
-            'region' => 'required|string',
             'engine_rating' => 'required|integer|min:0|max:10',
             'chassis_rating' => 'required|integer|min:0|max:10',
-            'handling_rating' => 'required|integer|min:0|max:10',
             'visual_rating' => 'required|integer|min:0|max:10',
             'general_rating' => 'required|integer|min:0|max:10',
             'description' => 'nullable|string',
             'vehicle_images' => 'nullable|array',
             'vehicle_images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
+
 
         Vehicle::create($request->all());
 
@@ -88,8 +86,4 @@ class VehicleController extends Controller
         $vehicles = Vehicle::all();
         return view('dashboard', ['vehicles' => $vehicles]);
     }
-
-
-
-
 }

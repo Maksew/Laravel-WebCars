@@ -13,10 +13,10 @@ class Vehicle extends Model
 
     protected $fillable = [
         'brand', 'model', 'year', 'category', 'energy', 'transmission',
-        'agency', 'price', 'kilometrage', 'region', 'engine_rating',
-        'chassis_rating', 'handling_rating', 'visual_rating',
-        'general_rating', 'description'
+        'price', 'kilometrage', 'engine_rating', 'chassis_rating',
+        'visual_rating', 'general_rating', 'description'
     ];
+
 
     public function ratings()
     {
