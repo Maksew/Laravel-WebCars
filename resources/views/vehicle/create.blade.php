@@ -35,14 +35,13 @@
 </style>
 
 
-
+@auth
 
 @extends('layouts.app')
 
 @section('content')
 
     <div class="container mt-3">
-        <h2 class="text-center mb-4">Ajouter un véhicule</h2>
         <div class="card">
             <div class="card-body">
                 <form action="{{ route('store.vehicle') }}" method="POST" enctype="multipart/form-data">
@@ -143,6 +142,11 @@
                         </select>
                     </div>
 
+                    <div class="form-group">
+                        <label for="price" class="form-label">Prix:</label>
+                        <input type="number" id="price" name="price" class="form-control" placeholder="Entrez le prix" required>
+                    </div>
+
 
                     <div class="row mb-3">
                         <!-- Transmission -->
@@ -155,6 +159,8 @@
                             </select>
                         </div>
                     </div>
+
+
                     <div class="row mb-3">
                         <!-- Année -->
                         <div class="form-group col-md-6">
@@ -197,64 +203,90 @@
                     <div class="row mb-3">
                         <div class="col-md-12">
                             <h5 class="mb-3">Notes</h5>
-                            <h3>Évaluation des Véhicules (sur 10)</h3>
                         </div>
 
-                        <div class="form-group col-md-3">
-                            <label for="chassis" class="form-label">Châssis:</label>
-                            <select id="chassis" name="chassis_rating" class="form-control">
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                            </select>
-                            <textarea name="chassis_justification" class="form-control mt-2" placeholder="Justificatif pour la note châssis"></textarea>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="engine_rating" class="form-label">Note du moteur (sur 10):</label>
+                                <select id="engine_rating" name="engine_rating" class="form-control" required>
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                                <textarea name="engine_justification" class="form-control mt-2" placeholder="Justificatif pour la note du moteur"></textarea>
+                            </div>
                         </div>
 
-                        <div class="form-group col-md-3">
-                            <label for="handling" class="form-label">Tenue de route:</label>
-                            <select id="tenue" name="tenue_rating" class="form-control">
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                            </select>
-                            <textarea name="handling_justification" class="form-control mt-2" placeholder="Justificatif pour la note tenue de route"></textarea>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="chassis" class="form-label">Châssis:</label>
+                                <select id="chassis" name="chassis_rating" class="form-control">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                                <textarea name="chassis_justification" class="form-control mt-2" placeholder="Justificatif pour la note du châssis"></textarea>
+                            </div>
                         </div>
 
-                        <div class="form-group col-md-3">
-                            <label for="visual" class="form-label">Visuel:</label>
-                            <select id="visual" name="visual_rating" class="form-control">
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                            </select>
-                            <textarea name="visual_justification" class="form-control mt-2" placeholder="Justificatif pour la note visuel"></textarea>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="handling" class="form-label">Tenue de route:</label>
+                                <select id="tenue" name="tenue_rating" class="form-control">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                                <textarea name="handling_justification" class="form-control mt-2" placeholder="Justificatif pour la note tenue de route"></textarea>
+                            </div>
                         </div>
 
-                        <div class="form-group col-md-12 mt-3">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="visual" class="form-label">Visuel:</label>
+                                <select id="visual" name="visual_rating" class="form-control">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                                <textarea name="visual_justification" class="form-control mt-2" placeholder="Justificatif pour la note du visuel"></textarea>
+                            </div>
+                        </div>
+
+
+                    <div class="form-group col-md-12 mt-3">
                             <label for="general" class="form-label">Note générale:</label>
                             <select id="general" name="general_rating" class="form-control">
                                 <option value="0">0</option>
@@ -297,8 +329,16 @@
             </div>
         </div>
     </div>
+    @else
+        <?php
+        // Rediriger vers la page de connexion avec un message flash
+        header('Location: /login');
+        session()->flash('error', 'Vous devez être connecté pour accéder à cette page.');
+        exit();
+        ?>
 
 
+    @endauth
 @endsection
 
 

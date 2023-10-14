@@ -34,7 +34,8 @@ Route::post('register', [RegisteredUserController::class, 'store']);
 Route::get('/rating/create', [RatingController::class, 'create'])->name('rating.create');
 Route::post('/rating/store', [RatingController::class, 'store'])->name('rating.store');
 
-Route::get('/vehicles/create', [VehicleController::class, 'create'])->name('vehicle.create');
+Route::get('/vehicles/create', [VehicleController::class, 'create'])->name('vehicle.create')->middleware('auth');
+
 Route::post('/vehicles', [VehicleController::class, 'store'])->name('store.vehicle');
 
 Route::get('/get-models-by-brand/{brand}', [VehicleController::class, 'getModelsByBrand']);
