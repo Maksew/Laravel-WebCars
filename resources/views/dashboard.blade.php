@@ -30,7 +30,7 @@
     @endif
 
         @foreach ($vehicles as $vehicle)
-            <div class="card mb-4">
+            <div class="card mb-2">
                 <div class="card-body d-flex align-items-center">
                     <!-- Vehicle Image -->
                     @if($vehicle->images->isNotEmpty())
@@ -41,7 +41,7 @@
 
                     <!-- Brand, Model and Rating -->
                     <div class="mr-4">
-                        <h5 class="card-title">{{ $vehicle->brand }} {{ $vehicle->model }} - Owned by: {{ $vehicle->user->name }}</h5>
+                        <h5 class="card-title">{{ $vehicle->brand }} {{ $vehicle->model }} - Propriétaire : {{ $vehicle->user->name }}</h5>
                         <p><strong>Note:</strong> {{ $vehicle->general_rating }}/10</p>
                     </div>
 
@@ -62,20 +62,77 @@
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                        <div class="modal-body">
-                            <!-- All Vehicle Details -->
-                            <strong>Year:</strong> {{ $vehicle->year }} <br>
-                            <strong>Category:</strong> {{ $vehicle->category }} <br>
-                            <strong>Energy:</strong> {{ $vehicle->energy }} <br>
-                            <strong>Transmission:</strong> {{ $vehicle->transmission }} <br>
-                            <strong>Price:</strong> {{ $vehicle->price }} <br>
-                            <strong>Kilometrage:</strong> {{ $vehicle->kilometrage }} <br>
-                            <strong>Engine Rating:</strong> {{ $vehicle->engine_rating }}/10 <br>
-                            <strong>Chassis Rating:</strong> {{ $vehicle->chassis_rating }}/10 <br>
-                            <strong>Visual Rating:</strong> {{ $vehicle->visual_rating }}/10 <br>
-                            <strong>Description:</strong> {{ $vehicle->description ?? 'N/A' }} <br>
-                            <!-- If you want to display vehicle images in the modal, you can add a section for that as well. -->
+                        <div class="modal-body p-5" style="font-size: 1.1em;"> <!-- Increased font size globally -->
+                            <div class="row">
+                                <!-- Left column for image and main details -->
+                                <div class="col-md-5 mb-4"> <!-- Increased margin-bottom -->
+                                    @if($vehicle->images->isNotEmpty())
+                                        <img src="{{ asset('storage/' . $vehicle->images->first()->image_path) }}" alt="{{ $vehicle->brand }} {{ $vehicle->model }}" class="img-fluid mb-4 border rounded shadow">
+                                    @else
+                                        <img src="{{ asset('images/logoCarsNotation.png') }}" alt="{{ $vehicle->brand }} {{ $vehicle->model }}" class="img-fluid mb-4 border rounded shadow">
+                                    @endif
+                                    <h4 class="text-primary mb-4 font-weight-bold">{{ $vehicle->brand }} {{ $vehicle->model }}</h4>
+                                    <p class="text-secondary"><strong>Description:</strong> {{ $vehicle->description ?? 'N/A' }}</p>
+                                </div>
+                                <!-- Separator -->
+                                <div class="col-md-1">
+                                    <div class="border-right"></div>
+                                </div>
+                                <div class="col-md-6 pt-4 pb-4"> <!-- Added padding-top and padding-bottom to the main div -->
+                                    <div class="row mb-4">
+                                        <div class="col-6 mb-3">
+                                            <div class="mb-3"> <!-- Added margin-bottom for each element -->
+                                                <strong><i class="fa fa-calendar" aria-hidden="true"></i> Year:</strong>
+                                                <span class="ml-2">{{ $vehicle->year }}</span>
+                                            </div>
+                                            <div class="mb-3">
+                                                <strong><i class="fa fa-tags" aria-hidden="true"></i> Category:</strong>
+                                                <span class="ml-2">{{ $vehicle->category }}</span>
+                                            </div>
+                                            <div class="mb-3">
+                                                <strong><i class="fa fa-plug" aria-hidden="true"></i> Energy:</strong>
+                                                <span class="ml-2">{{ $vehicle->energy }}</span>
+                                            </div>
+                                            <div class="mb-3">
+                                                <strong><i class="fa fa-cogs" aria-hidden="true"></i> Transmission:</strong>
+                                                <span class="ml-2">{{ $vehicle->transmission }}</span>
+                                            </div>
+                                            <div class="mb-3">
+                                                <strong><i class="fa fa-dollar-sign" aria-hidden="true"></i> Price:</strong>
+                                                <span class="ml-2 text-success font-weight-bold">{{ $vehicle->price }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 mb-3">
+                                            <div class="mb-3">
+                                                <strong><i class="fa fa-tachometer-alt" aria-hidden="true"></i> Kilometrage:</strong>
+                                                <span class="ml-2">{{ $vehicle->kilometrage }}</span>
+                                            </div>
+                                            <div class="mb-3">
+                                                <strong><i class="fa fa-star" aria-hidden="true"></i> Engine Rating:</strong>
+                                                <span class="ml-2 badge {{ $vehicle->engine_rating <= 3 ? 'badge-danger' : ($vehicle->engine_rating <= 6 ? 'badge-warning' : 'badge-success') }}">
+                    {{ $vehicle->engine_rating }}/10
+                </span>
+                                            </div>
+                                            <div class="mb-3">
+                                                <strong><i class="fa fa-car" aria-hidden="true"></i> Chassis Rating:</strong>
+                                                <span class="ml-2 badge {{ $vehicle->chassis_rating <= 3 ? 'badge-danger' : ($vehicle->chassis_rating <= 6 ? 'badge-warning' : 'badge-success') }}">
+                    {{ $vehicle->chassis_rating }}/10
+                </span>
+                                            </div>
+                                            <div class="mb-3">
+                                                <strong><i class="fa fa-eye" aria-hidden="true"></i> Visual Rating:</strong>
+                                                <span class="ml-2 badge {{ $vehicle->visual_rating <= 3 ? 'badge-danger' : ($vehicle->visual_rating <= 6 ? 'badge-warning' : 'badge-success') }}">
+                    {{ $vehicle->visual_rating }}/10
+                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
+
+
                     </div>
                 </div>
             </div>
