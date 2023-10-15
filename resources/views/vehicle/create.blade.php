@@ -307,7 +307,7 @@
                         <!-- Images -->
                         <div class="form-group col-md-12">
                             <label for="images" class="form-label">Images du véhicule:</label>
-                            <input type="file" id="images" name="vehicle_images[]" multiple class="form-control">
+                            <input type="file" id="images" name="vehicle_images[]" multiple class="form-control" accept="image/*">
                         </div>
                     </div>
 

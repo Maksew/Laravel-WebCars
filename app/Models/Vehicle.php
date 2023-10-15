@@ -18,7 +18,6 @@ class Vehicle extends Model
     ];
 
 
-
     public function ratings()
     {
         return $this->hasMany(Rating::class);
@@ -28,4 +27,10 @@ class Vehicle extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function images()
+    {
+        return $this->hasMany(VehicleImage::class);
+    }
+
 }

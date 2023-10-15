@@ -33,7 +33,11 @@
             <div class="card mb-4">
                 <div class="card-body d-flex align-items-center">
                     <!-- Vehicle Image -->
-                    <img src="{{ $vehicle->vehicle_images[0] ?? 'default-image-path.jpg' }}" alt="{{ $vehicle->brand }} {{ $vehicle->model }}" class="mr-4" style="width: 100px; height: auto;">
+                    @if($vehicle->images->isNotEmpty())
+                        <img src="{{ asset('storage/' . $vehicle->images->first()->image_path) }}" alt="{{ $vehicle->brand }} {{ $vehicle->model }}" class="mr-4" style="width: 100px; height: auto;">
+                    @else
+                        <img src="{{ asset('images/logoCarsNotation.png') }}" alt="{{ $vehicle->brand }} {{ $vehicle->model }}" class="mr-4" style="width: 100px; height: auto;">
+                    @endif
 
                     <!-- Brand, Model and Rating -->
                     <div class="mr-4">

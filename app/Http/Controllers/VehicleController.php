@@ -29,13 +29,25 @@ class VehicleController extends Controller
             'general_rating' => 'required|integer|min:0|max:10',
             'description' => 'nullable|string',
             'vehicle_images' => 'nullable|array',
-            'vehicle_images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'vehicle_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         $data = $request->all();
         $data['user_id'] = auth()->id();
 
-        Vehicle::create($data);
+        $vehicle = Vehicle::create($data);
+
+        if ($request->has('vehicle_images')) {
+            foreach ($request->file('vehicle_images') as $image) {
+                $path = $image->store('vehicle_images', 'public');
+
+                $vehicle->images()->create(['image_path' => $path]);
+            }
+        }
+        else {
+            $vehicle->images()->create(['image_path' => 'images/logoCarsNotation.png']);
+        }
+
 
         return redirect()->route('vehicle.create')->with('success', 'Véhicule ajouté avec succès!');
     }
