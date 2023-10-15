@@ -16,14 +16,13 @@
             <!-- Logo -->
             <div class="flex-shrink-0 flex items-center">
                 <a href="{{ route('dashboard') }}">
-                    <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200"></x-application-logo>
+                    <img src="{{ asset('images/logoCarsNotation.png') }}" alt="Logo" class="block h-9 w-auto">
+
                 </a>
             </div>
 
-            <div class="hidden md:flex items-center">
-                <!-- Navigation Links -->
-                <a href="{{ route('dashboard') }}" class="ml-10 text-gray-700 dark:text-gray-200">{{ __('Dashboard') }}</a>
 
+            <div class="hidden md:flex items-center">
                 <!-- Search Bar -->
                 <div class="ml-10 flex items-center">
                     <input type="text" placeholder="Rechercher..." class="rounded-full px-4 py-2 border border-gray-300">
@@ -33,16 +32,18 @@
 
             <!-- Profile, Logout, Login, and Register Buttons -->
             <div class="flex items-center ml-auto">
+                <!-- Navigation Links -->
+                <a href="{{ route('vehicle.create') }}" class="ml-10 text-gray-700 dark:text-gray-200">{{ __('Noter') }}</a>
                 @if (Auth::check())
-                    <a href="{{ route('profile.edit') }}" class="text-gray-700 dark:text-gray-200 ml-4">{{ __('Profile') }}</a>
+                    <a href="{{ route('profile.edit') }}" class="text-gray-700 dark:text-gray-200 ml-4">{{ __('Profil') }}</a>
                     <form method="POST" action="{{ route('logout') }}" class="ml-4">
                         @csrf
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();" class="text-gray-700 dark:text-gray-200">{{ __('Log Out') }}</a>
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();" class="text-gray-700 dark:text-gray-200">{{ __('Déconnecter') }}</a>
                     </form>
                 @else
-                    <a href="{{ route('login') }}" class="text-gray-700 dark:text-gray-200 ml-4">{{ __('Log in') }}</a>
+                    <a href="{{ route('login') }}" class="text-gray-700 dark:text-gray-200 ml-4">{{ __('Connexion') }}</a>
                     @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="text-gray-700 dark:text-gray-200 ml-4">{{ __('Register') }}</a>
+                        <a href="{{ route('register') }}" class="text-gray-700 dark:text-gray-200 ml-4">{{ __('Inscription') }}</a>
                     @endif
                 @endif
             </div>
