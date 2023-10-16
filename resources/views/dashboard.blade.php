@@ -41,14 +41,24 @@
 
                     <!-- Brand, Model and Rating -->
                     <div class="mr-4">
-                        <h5 class="card-title">{{ $vehicle->brand }} {{ $vehicle->model }} - Propriétaire : {{ $vehicle->user->name }}</h5>
+                        <h5 class="card-title">{{ $vehicle->brand }} {{ $vehicle->model }} - Propriétaire : {{ $vehicle->user->pseudo }}</h5>
                         <p><strong>Note:</strong> {{ $vehicle->general_rating }}/10</p>
                     </div>
 
                     <!-- Button to Display Details -->
+
                     <button type="button" class="btn btn-primary ml-auto" data-toggle="modal" data-target="#vehicleModal-{{ $vehicle->id }}">
                         Voir les détails
                     </button>
+                    @if(auth()->id() == $vehicle->user_id)
+                        <form method="POST" action="/path/to/delete/route/{{ $vehicle->id }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce véhicule?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger ml-2">
+                                Supprimer
+                            </button>
+                        </form>
+                    @endif
                 </div>
             </div>
 
@@ -128,11 +138,8 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
