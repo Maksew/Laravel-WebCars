@@ -33,6 +33,11 @@ class Vehicle extends Model
         return $this->hasMany(VehicleImage::class);
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
 
 
 }

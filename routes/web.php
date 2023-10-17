@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\VehicleController;
@@ -40,6 +41,8 @@ Route::post('/vehicles', [VehicleController::class, 'store'])->name('store.vehic
 
 Route::get('/get-models-by-brand/{brand}', [VehicleController::class, 'getModelsByBrand']);
 
+Route::post('comments', [CommentController::class, 'store'])->name('comments.store');
+Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
 
 
