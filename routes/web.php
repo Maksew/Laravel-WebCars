@@ -22,7 +22,6 @@ Route::get('/', [VehicleController::class, 'index'])->name('dashboard');
 Route::get('/dashboard', [VehicleController::class, 'index'])->name('dashboard.index');
 
 
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -43,7 +42,8 @@ Route::get('/get-models-by-brand/{brand}', [VehicleController::class, 'getModels
 
 Route::post('comments', [CommentController::class, 'store'])->name('comments.store');
 Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+Route::get('/comments/{comment}/edit', [CommentController::class, 'edit'])->name('comments.edit');
+Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
 
 
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

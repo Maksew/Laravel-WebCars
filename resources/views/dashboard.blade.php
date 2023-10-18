@@ -168,14 +168,30 @@
                                         <strong class="card-title">{{ $comment->user->pseudo }}</strong>
                                         <p class="card-text">{{ $comment->comment }}</p>
 
-                                        <!-- Place the delete button inside the loop -->
                                         @if(auth()->id() === $comment->user->id || auth()->id() === $vehicle->user_id)
-                                            <form action="{{ route('comments.destroy', $comment->id) }}" method="POST"
-                                                  class="mt-2">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
-                                            </form>
+                                            <div class="d-flex justify-content-start align-items-center">
+
+                                                <!-- Delete Button -->
+                                                <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" class="mr-2">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                                                </form>
+
+                                                <!-- Edit Button -->
+                                                <button type="button" class="btn btn-sm btn-warning" data-toggle="collapse" data-target="#editForm-{{ $comment->id }}">Edit</button>
+
+                                            </div>
+
+                                            <!-- Update Form - Collapsible, shown when "Edit" is clicked -->
+                                            <div class="collapse mt-2" id="editForm-{{ $comment->id }}">
+                                                <form action="{{ route('comments.update', $comment->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <textarea name="comment" class="form-control">{{ $comment->comment }}</textarea>
+                                                    <button type="submit" class="btn btn-primary mt-2">Mettre à jour</button>
+                                                </form>
+                                            </div>
                                         @endif
                                     </div>
                                 </div>
@@ -198,7 +214,7 @@
                 </div>
             </div>
         </div>
-        @endforeach
+    @endforeach
 </div>
 
 <!-- Bootstrap and jQuery Scripts -->
