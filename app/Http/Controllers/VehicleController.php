@@ -104,4 +104,16 @@ class VehicleController extends Controller
         $vehicles = Vehicle::all();
         return view('dashboard', ['vehicles' => $vehicles]);
     }
+
+    public function destroy(Vehicle $vehicle)
+    {
+        // Assurez-vous que l'utilisateur actuel est autorisé à supprimer le véhicule
+        if (auth()->id() !== $vehicle->user_id) {
+            return redirect()->back()->with('error', 'Vous n\'êtes pas autorisé à effectuer cette action.');
+        }
+
+        $vehicle->delete();
+
+        return redirect()->route('dashboard')->with('success', 'Véhicule supprimé avec succès.');
+    }
 }

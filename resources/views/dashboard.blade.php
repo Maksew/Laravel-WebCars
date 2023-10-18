@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <title>CarsNoting</title>
@@ -57,13 +59,28 @@
                     Voir les détails
                 </button>
                 @if(auth()->id() == $vehicle->user_id)
-                    <form method="POST" action="/path/to/delete/route/{{ $vehicle->id }}"
-                          onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce véhicule?');">
+                    <button type="button" class="btn btn-danger ml-2" onclick="confirmDelete({{ $vehicle->id }})">Supprimer</button>
+                    <script>
+                        function confirmDelete(vehicleId) {
+                            Swal.fire({
+                                title: 'Êtes-vous sûr?',
+                                text: "Vous ne pourrez pas revenir en arrière!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#d33',
+                                cancelButtonColor: '#3085d6',
+                                confirmButtonText: 'Oui, supprimez-le!',
+                                cancelButtonText: 'Annuler'  // Ajouté cette ligne pour modifier le texte du bouton d'annulation
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    document.querySelector(`#delete-form-${vehicleId}`).submit();
+                                }
+                            })
+                        }
+                    </script>
+                    <form id="delete-form-{{ $vehicle->id }}" method="POST" action="{{ route('vehicle.destroy', $vehicle->id) }}" style="display: none;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger ml-2">
-                            Supprimer
-                        </button>
                     </form>
                 @endif
             </div>
