@@ -32,34 +32,63 @@
     @endif
 
     @foreach ($vehicles as $vehicle)
-        <div class="card mb-2">
+        <style>
+            .custom-card {
+                transition: transform .2s, box-shadow .2s;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                border-radius: 20px;
+                overflow: hidden;
+            }
+
+            .custom-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 7px 9px rgba(0, 0, 0, 0.2);
+            }
+
+            .vehicle-image {
+                width: 150px;
+                height: auto;
+                border-radius: 15px;
+                margin-right: 15px;
+            }
+
+            .btn {
+                border-radius: 20px;
+                transition: all .2s;
+            }
+
+            .btn:hover {
+                transform: translateY(-2px);
+            }
+        </style>
+
+        <div class="card custom-card mb-2">
             <div class="card-body d-flex align-items-center">
                 <!-- Vehicle Image -->
                 @if($vehicle->images->isNotEmpty())
                     <img src="{{ asset('storage/' . $vehicle->images->first()->image_path) }}"
-                         alt="{{ $vehicle->brand }} {{ $vehicle->model }}" class="mr-4"
-                         style="width: 100px; height: auto;">
+                         alt="{{ $vehicle->brand }} {{ $vehicle->model }}" class="vehicle-image">
                 @else
                     <img src="{{ asset('images/logoCarsNotation.png') }}"
-                         alt="{{ $vehicle->brand }} {{ $vehicle->model }}" class="mr-4"
-                         style="width: 100px; height: auto;">
+                         alt="{{ $vehicle->brand }} {{ $vehicle->model }}" class="vehicle-image">
                 @endif
 
                 <!-- Brand, Model and Rating -->
                 <div class="mr-4">
-                    <h5 class="card-title">{{ $vehicle->brand }} {{ $vehicle->model }} - Propriétaire
-                        : {{ $vehicle->user->pseudo }}</h5>
+                    <h5 class="card-title">{{ $vehicle->brand }} {{ $vehicle->model }} -
+                        Propriétaire: {{ $vehicle->user->pseudo }}</h5>
                     <p><strong>Note:</strong> {{ $vehicle->general_rating }}/10</p>
                 </div>
 
                 <!-- Button to Display Details -->
-
                 <button type="button" class="btn btn-primary ml-auto" data-toggle="modal"
-                        data-target="#vehicleModal-{{ $vehicle->id }}">
-                    Voir les détails
+                        data-target="#vehicleModal-{{ $vehicle->id }}">Voir les détails
                 </button>
+
                 @if(auth()->id() == $vehicle->user_id)
-                    <button type="button" class="btn btn-danger ml-2" onclick="confirmDelete({{ $vehicle->id }})">Supprimer</button>
+                    <button type="button" class="btn btn-danger ml-2" onclick="confirmDelete({{ $vehicle->id }})">
+                        Supprimer
+                    </button>
                     <script>
                         function confirmDelete(vehicleId) {
                             Swal.fire({
@@ -70,7 +99,7 @@
                                 confirmButtonColor: '#d33',
                                 cancelButtonColor: '#3085d6',
                                 confirmButtonText: 'Oui, supprimez-le!',
-                                cancelButtonText: 'Annuler'  // Ajouté cette ligne pour modifier le texte du bouton d'annulation
+                                cancelButtonText: 'Annuler'
                             }).then((result) => {
                                 if (result.isConfirmed) {
                                     document.querySelector(`#delete-form-${vehicleId}`).submit();
@@ -78,13 +107,15 @@
                             })
                         }
                     </script>
-                    <form id="delete-form-{{ $vehicle->id }}" method="POST" action="{{ route('vehicle.destroy', $vehicle->id) }}" style="display: none;">
+                    <form id="delete-form-{{ $vehicle->id }}" method="POST"
+                          action="{{ route('vehicle.destroy', $vehicle->id) }}" style="display: none;">
                         @csrf
                         @method('DELETE')
                     </form>
                 @endif
             </div>
         </div>
+
 
         <!-- Modal for Each Vehicle -->
         <div class="modal fade" id="vehicleModal-{{ $vehicle->id }}" tabindex="-1" role="dialog"
@@ -185,28 +216,34 @@
                                         <strong class="card-title">{{ $comment->user->pseudo }}</strong>
                                         <p class="card-text">{{ $comment->comment }}</p>
 
-                                        @if(auth()->id() === $comment->user->id || auth()->id() === $vehicle->user_id)
+                                        @if(auth()->id() === $comment->user->id)
                                             <div class="d-flex justify-content-start align-items-center">
-
                                                 <!-- Delete Button -->
-                                                <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" class="mr-2">
+                                                <form action="{{ route('comments.destroy', $comment->id) }}"
+                                                      method="POST" class="mr-2">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                                                    <button type="submit" class="btn btn-sm btn-danger">Supprimer
+                                                    </button>
                                                 </form>
 
                                                 <!-- Edit Button -->
-                                                <button type="button" class="btn btn-sm btn-warning" data-toggle="collapse" data-target="#editForm-{{ $comment->id }}">Edit</button>
-
+                                                <button type="button" class="btn btn-sm btn-warning"
+                                                        data-toggle="collapse"
+                                                        data-target="#editForm-{{ $comment->id }}">Edit
+                                                </button>
                                             </div>
 
                                             <!-- Update Form - Collapsible, shown when "Edit" is clicked -->
                                             <div class="collapse mt-2" id="editForm-{{ $comment->id }}">
-                                                <form action="{{ route('comments.update', $comment->id) }}" method="POST">
+                                                <form action="{{ route('comments.update', $comment->id) }}"
+                                                      method="POST">
                                                     @csrf
                                                     @method('PUT')
-                                                    <textarea name="comment" class="form-control">{{ $comment->comment }}</textarea>
-                                                    <button type="submit" class="btn btn-primary mt-2">Mettre à jour</button>
+                                                    <textarea name="comment"
+                                                              class="form-control">{{ $comment->comment }}</textarea>
+                                                    <button type="submit" class="btn btn-primary mt-2">Mettre à jour
+                                                    </button>
                                                 </form>
                                             </div>
                                         @endif
