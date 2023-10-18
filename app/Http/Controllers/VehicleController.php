@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewVehicleCreated;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 
@@ -48,8 +49,10 @@ class VehicleController extends Controller
             $vehicle->images()->create(['image_path' => 'images/logoCarsNotation.png']);
         }
 
-
+        event(new NewVehicleCreated($vehicle));
         return redirect()->route('vehicle.create')->with('success', 'Véhicule ajouté avec succès!');
+
+
     }
 
 

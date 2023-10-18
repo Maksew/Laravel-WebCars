@@ -83,6 +83,13 @@ services:
                 - 'http://localhost:7700/health'
             retries: 3
             timeout: 5s
+    mailhog:
+        image: mailhog/mailhog
+        ports:
+            - "1025:1025" # Port SMTP
+            - "8025:8025" # Port de l'interface utilisateur web
+        networks:
+            - sail
 networks:
     sail:
         driver: bridge

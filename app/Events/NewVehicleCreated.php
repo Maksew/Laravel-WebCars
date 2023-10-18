@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Vehicle;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -17,9 +18,11 @@ class NewVehicleCreated
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public Vehicle $vehicle;
+
+    public function __construct(Vehicle $vehicle)
     {
-        //
+        $this->vehicle = $vehicle;
     }
 
     /**

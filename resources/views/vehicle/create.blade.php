@@ -314,7 +314,11 @@
                     <!-- Boutons -->
                     <button type="submit" class="btn btn-success">Ajouter le véhicule</button>
                     <a href="{{ route('dashboard') }}" class="btn btn-danger">Annuler</a>
-
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
