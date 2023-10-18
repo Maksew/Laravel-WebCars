@@ -12,7 +12,7 @@
     <title>CarsNoting</title>
 </head>
 
-<body class="bg-light"> <!-- Removed the red background -->
+<body style="background-color: #f8f8f8;">
 
 <!-- Navigation Bar -->
 @include('layouts.navigation')
@@ -62,8 +62,8 @@
             }
         </style>
 
-        <div class="card custom-card mb-2">
-            <div class="card-body d-flex align-items-center">
+            <div class="card custom-card" style="background-color: #ffffff; color: #000000; margin-bottom: 1rem;">
+                <div class="card-body d-flex align-items-center">
                 <!-- Vehicle Image -->
                 @if($vehicle->images->isNotEmpty())
                     <img src="{{ asset('storage/' . $vehicle->images->first()->image_path) }}"
