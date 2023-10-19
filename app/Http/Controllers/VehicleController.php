@@ -45,10 +45,6 @@ class VehicleController extends Controller
                 $vehicle->images()->create(['image_path' => $path]);
             }
         }
-        else {
-            $vehicle->images()->create(['image_path' => 'images/logoCarsNotation.png']);
-        }
-
         event(new NewVehicleCreated($vehicle));
         return redirect()->route('vehicle.create')->with('success', 'Véhicule ajouté avec succès!');
 
