@@ -293,6 +293,35 @@
                             <textarea name="description" class="form-control mt-2" placeholder="Justificatif pour la note générale"></textarea>
                         </div>
 
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const visualSelect = document.getElementById('visual');
+                                const tenueSelect = document.getElementById('tenue');
+                                const chassisSelect = document.getElementById('chassis');
+                                const engineSelect = document.getElementById('engine_rating');
+                                const generalDisplay = document.getElementById('generalDisplay');
+                                const generalInput = document.getElementById('general'); // Ceci est l'input caché
+
+                                visualSelect.addEventListener('change', updateGeneralRating);
+                                tenueSelect.addEventListener('change', updateGeneralRating);
+                                chassisSelect.addEventListener('change', updateGeneralRating);
+                                engineSelect.addEventListener('change', updateGeneralRating);
+
+                                function updateGeneralRating() {
+                                    const visualValue = parseInt(visualSelect.value, 10);
+                                    const tenueValue = parseInt(tenueSelect.value, 10);
+                                    const chassisValue = parseInt(chassisSelect.value, 10);
+                                    const engineValue = parseInt(engineSelect.value, 10);
+
+                                    const average = Math.round((visualValue + tenueValue + chassisValue + engineValue) / 4);
+
+                                    generalDisplay.textContent = average;
+                                    generalInput.value = average;
+                                }
+                            });
+                        </script>
+
+
 
                         <!-- Images -->
                         <div class="form-group col-md-12">
