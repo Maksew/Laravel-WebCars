@@ -25,18 +25,9 @@ class CommentController extends Controller
 
     public function destroy($id)
     {
-        // Eager load the vehicle relationship
-        $comment = Comment::with('vehicle')->findOrFail($id);
-
-        // Check if the authenticated user is the owner of the comment or the vehicle
-        if (auth()->id() !== $comment->user_id && auth()->id() !== $comment->vehicle->user_id) {
-            return redirect()->back()->with('error', 'Unauthorized action.');
-        }
-
-        // Delete the comment
+        $comment = Comment::findOrFail($id);
+        $this->authorize('delete', $comment);
         $comment->delete();
-
-        // Redirect back with a success message
         return redirect()->back()->with('success', 'Comment deleted successfully.');
     }
 
@@ -52,19 +43,14 @@ class CommentController extends Controller
 
     public function update(Request $request, Comment $comment)
     {
-        // Check if the authenticated user is the owner of the comment
-        if (auth()->id() !== $comment->user_id) {
-            return redirect()->back()->with('error', 'Unauthorized action.');
-        }
-
+        $this->authorize('update', $comment);
         $request->validate([
             'comment' => 'required',
         ]);
-
         $comment->update(['comment' => $request->comment]);
-
         return redirect()->back()->with('success', 'Comment updated successfully.');
     }
+
 
 
 }

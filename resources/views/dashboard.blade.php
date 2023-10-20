@@ -64,8 +64,8 @@
     @endif
 
     @foreach ($vehicles as $vehicle)
-            <div class="card custom-card" style="background-color: #ffffff; color: #000000; margin-bottom: 1rem;">
-                <div class="card-body d-flex align-items-center">
+        <div class="card custom-card" style="background-color: #ffffff; color: #000000; margin-bottom: 1rem;">
+            <div class="card-body d-flex align-items-center">
                 <!-- Vehicle Image -->
                 @if($vehicle->images->isNotEmpty())
                     <img src="{{ asset('storage/' . $vehicle->images->first()->image_path) }}"
@@ -87,7 +87,7 @@
                         data-target="#vehicleModal-{{ $vehicle->id }}">Voir les détails
                 </button>
 
-                @if(auth()->id() == $vehicle->user_id)
+                @can('delete', $vehicle)
                     <button type="button" class="btn btn-danger ml-2" onclick="confirmDelete({{ $vehicle->id }})">
                         Supprimer
                     </button>
@@ -114,7 +114,7 @@
                         @csrf
                         @method('DELETE')
                     </form>
-                @endif
+                @endcan
             </div>
         </div>
 
@@ -218,17 +218,8 @@
                                         <strong class="card-title">{{ $comment->user->pseudo }}</strong>
                                         <p class="card-text">{{ $comment->comment }}</p>
 
-                                        @if(auth()->id() === $comment->user->id)
+                                        @can('update', $comment)
                                             <div class="d-flex justify-content-start align-items-center">
-                                                <!-- Delete Button -->
-                                                <form action="{{ route('comments.destroy', $comment->id) }}"
-                                                      method="POST" class="mr-2">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-danger">Supprimer
-                                                    </button>
-                                                </form>
-
                                                 <!-- Edit Button -->
                                                 <button type="button" class="btn btn-sm btn-warning"
                                                         data-toggle="collapse"
@@ -248,7 +239,19 @@
                                                     </button>
                                                 </form>
                                             </div>
-                                        @endif
+                                        @endcan
+
+                                        @can('delete', $comment)
+                                            <!-- Delete Button -->
+                                            <form action="{{ route('comments.destroy', $comment->id) }}"
+                                                  method="POST" class="mr-2">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger">Supprimer
+                                                </button>
+                                            </form>
+                                        @endcan
+
                                     </div>
                                 </div>
                             @endforeach
@@ -271,7 +274,7 @@
             </div>
         </div>
     @endforeach
-        {{ $vehicles->links() }}
+    {{ $vehicles->links() }}
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

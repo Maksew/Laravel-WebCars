@@ -77,14 +77,13 @@ class VehicleController extends Controller
 
     public function destroy(Vehicle $vehicle)
     {
-        if (auth()->id() !== $vehicle->user_id) {
-            return redirect()->back()->with('error', 'Vous n\'êtes pas autorisé à effectuer cette action.');
-        }
+        $this->authorize('delete', $vehicle);
 
         $vehicle->delete();
 
         return redirect()->route('dashboard')->with('success', 'Véhicule supprimé avec succès.');
     }
+
 
     protected $brandsAndModels = [
         'Audi' => ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'Q2', 'Q3', 'Q5', 'Q7', 'Q8'],
