@@ -90,20 +90,19 @@ class VehicleController extends Controller
 
     public function getModelsByBrand($brand)
     {
-        // Obtenez les modèles en fonction de la marque sélectionnée
         $models = $this->brandsAndModels[$brand] ?? [];
         return response()->json($models);
     }
 
     public function index()
     {
-        $vehicles = Vehicle::all();
+        $vehicles = Vehicle::orderBy('created_at', 'desc')->paginate(7);
         return view('dashboard', ['vehicles' => $vehicles]);
     }
 
+
     public function destroy(Vehicle $vehicle)
     {
-        // Assurez-vous que l'utilisateur actuel est autorisé à supprimer le véhicule
         if (auth()->id() !== $vehicle->user_id) {
             return redirect()->back()->with('error', 'Vous n\'êtes pas autorisé à effectuer cette action.');
         }

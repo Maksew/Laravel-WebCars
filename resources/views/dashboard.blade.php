@@ -9,10 +9,42 @@
 
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <style>
+        /* Common Styles */
+        .custom-card {
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .custom-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 7px 9px rgba(0, 0, 0, 0.2);
+        }
+
+        .vehicle-image {
+            width: 150px;
+            height: auto;
+            border-radius: 15px;
+            margin-right: 15px;
+        }
+
+        .btn {
+            border-radius: 20px;
+            transition: all .2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+
     <title>CarsNoting</title>
 </head>
 
-<body style="background-color: #f8f8f8;">
+<body style="background-color: #e6f4ff;">
 
 <!-- Navigation Bar -->
 @include('layouts.navigation')
@@ -32,36 +64,6 @@
     @endif
 
     @foreach ($vehicles as $vehicle)
-        <style>
-            .custom-card {
-                transition: transform .2s, box-shadow .2s;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                border-radius: 20px;
-                overflow: hidden;
-            }
-
-            .custom-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 7px 9px rgba(0, 0, 0, 0.2);
-            }
-
-            .vehicle-image {
-                width: 150px;
-                height: auto;
-                border-radius: 15px;
-                margin-right: 15px;
-            }
-
-            .btn {
-                border-radius: 20px;
-                transition: all .2s;
-            }
-
-            .btn:hover {
-                transform: translateY(-2px);
-            }
-        </style>
-
             <div class="card custom-card" style="background-color: #ffffff; color: #000000; margin-bottom: 1rem;">
                 <div class="card-body d-flex align-items-center">
                 <!-- Vehicle Image -->
@@ -269,6 +271,7 @@
             </div>
         </div>
     @endforeach
+        {{ $vehicles->links() }}
 </div>
 
 <!-- Bootstrap and jQuery Scripts -->
