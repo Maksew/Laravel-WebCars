@@ -24,10 +24,10 @@
 
             <div class="hidden md:flex items-center">
                 <!-- Search Bar -->
-                <div class="ml-10 flex items-center">
-                    <input type="text" placeholder="Rechercher..." class="rounded-full px-4 py-2 border border-gray-300">
-                    <button class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-full">Valider</button>
-                </div>
+                <form action="{{ route('vehicle.index') }}" method="GET" class="ml-10 flex items-center">
+                    <input type="text" name="search" placeholder="Rechercher..." class="rounded-full px-4 py-2 border border-gray-300" value="{{ request('search') }}">
+                    <button type="submit" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-full">Valider</button>
+                </form>
             </div>
 
             <!-- Profile, Logout, Login, and Register Buttons -->

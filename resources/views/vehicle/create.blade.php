@@ -5,7 +5,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+<script src="/resources/js/AVG.js"></script>
 <style>
     body {
         background-color: #ffffff; /* Couleur blanche */
@@ -286,23 +286,13 @@
                         </div>
 
 
-                    <div class="form-group col-md-12 mt-3">
+                        <div class="form-group col-md-12 mt-3">
                             <label for="general" class="form-label">Note générale:</label>
-                            <select id="general" name="general_rating" class="form-control">
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                            </select>
-                            <textarea name="general_justification" class="form-control mt-2" placeholder="Justificatif pour la note générale"></textarea>
+                            <div id="generalDisplay">0</div> <!-- Affichage de la note générale -->
+                            <input type="hidden" id="general" name="general_rating" value="0"> <!-- Champ caché pour soumettre la note générale -->
+                            <textarea name="description" class="form-control mt-2" placeholder="Justificatif pour la note générale"></textarea>
                         </div>
+
 
                         <!-- Images -->
                         <div class="form-group col-md-12">

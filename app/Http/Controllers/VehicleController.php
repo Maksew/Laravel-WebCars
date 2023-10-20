@@ -51,6 +51,40 @@ class VehicleController extends Controller
 
     }
 
+    public function getModelsByBrand($brand)
+    {
+        $models = $this->brandsAndModels[$brand] ?? [];
+        return response()->json($models);
+    }
+
+    public function index(Request $request)
+    {
+        $search = $request->input('search');
+
+        if($search) {
+            $vehicles = Vehicle::where('brand', 'LIKE', "%{$search}%")
+                ->orWhere('model', 'LIKE', "%{$search}%")
+                ->orWhere('energy', 'LIKE', "%{$search}%")
+                ->orWhere('category', 'LIKE', "%{$search}%")
+                ->orderBy('created_at', 'desc')
+                ->paginate(7);
+        } else {
+            $vehicles = Vehicle::orderBy('created_at', 'desc')->paginate(7);
+        }
+
+        return view('dashboard', ['vehicles' => $vehicles]);
+    }
+
+    public function destroy(Vehicle $vehicle)
+    {
+        if (auth()->id() !== $vehicle->user_id) {
+            return redirect()->back()->with('error', 'Vous n\'êtes pas autorisé à effectuer cette action.');
+        }
+
+        $vehicle->delete();
+
+        return redirect()->route('dashboard')->with('success', 'Véhicule supprimé avec succès.');
+    }
 
     protected $brandsAndModels = [
         'Audi' => ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'Q2', 'Q3', 'Q5', 'Q7', 'Q8'],
@@ -87,28 +121,4 @@ class VehicleController extends Controller
         'Volkswagen' => ['Golf', 'Jetta', 'Passat', 'Tiguan', 'Atlas'],
         'Volvo' => ['S60', 'S90', 'XC40', 'XC60', 'XC90'],
     ];
-
-    public function getModelsByBrand($brand)
-    {
-        $models = $this->brandsAndModels[$brand] ?? [];
-        return response()->json($models);
-    }
-
-    public function index()
-    {
-        $vehicles = Vehicle::orderBy('created_at', 'desc')->paginate(7);
-        return view('dashboard', ['vehicles' => $vehicles]);
-    }
-
-
-    public function destroy(Vehicle $vehicle)
-    {
-        if (auth()->id() !== $vehicle->user_id) {
-            return redirect()->back()->with('error', 'Vous n\'êtes pas autorisé à effectuer cette action.');
-        }
-
-        $vehicle->delete();
-
-        return redirect()->route('dashboard')->with('success', 'Véhicule supprimé avec succès.');
-    }
 }

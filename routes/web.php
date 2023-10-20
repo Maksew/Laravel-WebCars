@@ -36,6 +36,7 @@ Route::post('/rating/store', [RatingController::class, 'store'])->name('rating.s
 
 Route::get('/vehicles/create', [VehicleController::class, 'create'])->name('vehicle.create')->middleware('auth');
 Route::post('/vehicles', [VehicleController::class, 'store'])->name('store.vehicle');
+Route::get('/vehicles', [VehicleController::class, 'index'])->name('vehicle.index');
 Route::delete('/vehicles/{vehicle}', [VehicleController::class, 'destroy'])->name('vehicle.destroy');
 
 
